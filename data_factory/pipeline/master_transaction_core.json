@@ -1,0 +1,11 @@
+{
+	"name": "master_transaction_core",
+	"properties": {
+		"folder": {
+			"name": "02_master_models"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-08-11T02:22:09Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,10 @@
+{
+	"name": "ADLSLinkedService",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://dlsupdsbcscdev7rw.dfs.core.windows.net/"
+		}
+	}
+}

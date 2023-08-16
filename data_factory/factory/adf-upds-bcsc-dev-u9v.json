@@ -1,4 +1,9 @@
 {
 	"name": "adf-upds-bcsc-dev-u9v",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "true"
+		}
+	},
 	"location": "eastus2"
 }

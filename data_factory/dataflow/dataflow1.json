@@ -1,0 +1,58 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"folder": {
+			"name": "ProcessBusiness"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_adls_csv_target",
+						"type": "DatasetReference"
+					},
+					"name": "sourceSharedknow"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_adls_parquet_target",
+						"type": "DatasetReference"
+					},
+					"name": "sinkParquet"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddAuditColumn"
+				},
+				{
+					"name": "filterUserIDMayor1000"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Id as integer,",
+				"          Name as string,",
+				"          UserId as integer,",
+				"          Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceSharedknow",
+				"sourceSharedknow derive(processdata = currentDate()) ~> AddAuditColumn",
+				"AddAuditColumn filter(UserId<1000) ~> filterUserIDMayor1000",
+				"filterUserIDMayor1000 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkParquet"
+			]
+		}
+	}
+}

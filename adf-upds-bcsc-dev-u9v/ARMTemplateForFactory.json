@@ -270,6 +270,47 @@
 								}
 							}
 						]
+					},
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "raw to business",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceSharedknow": {
+										"filename": "badges"
+									},
+									"sinkParquet": {
+										"filename": "badges"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -280,7 +321,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_adls_csv')]",
-				"[concat(variables('factoryId'), '/datasets/ds_adls_csv_target')]"
+				"[concat(variables('factoryId'), '/datasets/ds_adls_csv_target')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
 			]
 		},
 		{
@@ -505,6 +547,40 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_adls_parquet_target')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLSLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@concat(dataset().filename,'.parquet')",
+							"type": "Expression"
+						},
+						"folderPath": "aggregate",
+						"fileSystem": "business"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLSLinkedService')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ADLSLinkedService')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -573,6 +649,70 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "ProcessBusiness"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_adls_csv_target",
+								"type": "DatasetReference"
+							},
+							"name": "sourceSharedknow"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_adls_parquet_target",
+								"type": "DatasetReference"
+							},
+							"name": "sinkParquet"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AddAuditColumn"
+						},
+						{
+							"name": "filterUserIDMayor1000"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as integer,",
+						"          Name as string,",
+						"          UserId as integer,",
+						"          Date as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceSharedknow",
+						"sourceSharedknow derive(processdata = currentDate()) ~> AddAuditColumn",
+						"AddAuditColumn filter(UserId<1000) ~> filterUserIDMayor1000",
+						"filterUserIDMayor1000 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sinkParquet"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_adls_csv_target')]",
+				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_target')]"
+			]
 		}
 	]
 }

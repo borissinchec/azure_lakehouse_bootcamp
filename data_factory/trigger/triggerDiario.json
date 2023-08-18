@@ -1,0 +1,24 @@
+{
+	"name": "triggerDiario",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "ProcesoPadre",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 15,
+				"startTime": "2023-08-17T21:19:00",
+				"timeZone": "SA Pacific Standard Time"
+			}
+		}
+	}
+}

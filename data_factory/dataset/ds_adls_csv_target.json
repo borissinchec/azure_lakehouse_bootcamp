@@ -5,12 +5,20 @@
 			"referenceName": "ADLSLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "badges_pro.csv",
+				"fileName": {
+					"value": "@concat(dataset().filename,'_pro.csv') ",
+					"type": "Expression"
+				},
 				"folderPath": "process",
 				"fileSystem": "business"
 			},

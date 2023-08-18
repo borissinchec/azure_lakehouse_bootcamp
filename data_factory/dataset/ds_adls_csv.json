@@ -15,8 +15,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "sk_badges.csv",
-				"folderPath": "data/sharedknow/badges",
+				"fileName": {
+					"value": "@concat('sk_',dataset().filename,'.csv') ",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('data/sharedknow/',dataset().filename) ",
+					"type": "Expression"
+				},
 				"fileSystem": "raw"
 			},
 			"columnDelimiter": "|",

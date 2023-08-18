@@ -14,7 +14,9 @@
 				"typeProperties": {
 					"variableName": "lista_archivos",
 					"value": [
-						"['comments','users','linktypes']"
+						"comments",
+						"users",
+						"linktypes"
 					]
 				}
 			},

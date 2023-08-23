@@ -1,0 +1,76 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"type": "string",
+			"metadata": "Workspace name",
+			"defaultValue": "synw-upds-bcsc-dev-t41"
+		}
+	},
+	"variables": {
+		"workspaceId": "[concat('Microsoft.Synapse/workspaces/', parameters('workspaceName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('workspaceName'), '/00_CREATE_TABLE_SCHEMA')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE DATABASE datascience2023;\nGO\n\nUSE datascience2023;\nGO\n\nCREATE SCHEMA business AUTHORIZATION dbo;\nGO\n\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'p39345ghJ@KL95909234nl0zBe'\nGO\n\nCREATE DATABASE SCOPED CREDENTIAL UPUserIdentity WITH IDENTITY = 'SHARED ACCESS SIGNATURE',\nSECRET = '?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2023-09-01T09:52:26Z&st=2023-08-23T01:52:26Z&spr=https&sig=mB7p5EHDsg8ZvnBYvaT2hQsabFkro6ChFfgJQXjHeWg%3D'\nGO\n\nUSE datascience2023;\nGO\n\nCREATE EXTERNAL DATA SOURCE UPExternalDataSource\nWITH (\n    LOCATION = 'https://dlsupdsbcscdev7rw.dfs.core.windows.net/',\n    CREDENTIAL = UPUserIdentity\n);\nGO\n\nCREATE EXTERNAL FILE FORMAT UPParquetFileFormat \nWITH (\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n);\nGO\n\nCREATE EXTERNAL FILE FORMAT UPCSVFileFormat\nWITH (\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS (\n        PARSER_VERSION='2.0',\n        FIELD_TERMINATOR = '|',\n        STRING_DELIMITER = '\"',\n        FIRST_ROW = 2)\n)",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "datascience2023",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/01_CREATE_TABLE_VIEW')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "USE datascience2023;\nGO;\n\n--Table Type: Catalogo\nCREATE VIEW business.ProductCategory \nAS\n SELECT \n CAST (ProductCategoryID AS INT) as ProductCategoryID, CAST(Name AS VARCHAR(20)) AS ProductCategoryName from\n OPENROWSET (\n BULK 'https://stacdatasciencelabpayano.dfs.core.windows.net/raw/advw/data/productcategory/*.parquet',\n FORMAT ='PARQUET'\n ) as [r];\nGO\n\n--Table Type: Maestro\nCREATE VIEW business.Product\n AS\n SELECT \n CAST (ProductID AS INT) as ProductID,\n CAST (ProductSubcategoryID AS INT) as ProductSubcategoryID,\n CAST (Name AS VARCHAR(50)) as Name,\n CAST (ProductNumber AS VARCHAR(25)) as ProductNumber,\n CAST (MakeFlag AS CHAR(1)) as MakeFlag,\n CAST (FinishedGoodsFlag AS VARCHAR(5)) as FinishedGoodsFlag,\n CAST (Color AS VARCHAR(15)) as Color,\n CAST (SafetyStockLevel AS SMALLINT) as SafetyStockLevel,\n CAST (ReorderPoint AS SMALLINT) as ReorderPoint,\n CAST (StandardCost AS MONEY) as StandardCost,\n CAST (ListPrice AS MONEY) as ListPrice,\n CAST (Size AS VARCHAR(5)) as Size,\n CAST (DaysToManufacture AS INT) as DaysToManufacture,\n CAST (ProductLine AS CHAR(2)) as ProductLine,\n CAST (Class AS CHAR(2)) as Class,\n CAST (Style AS CHAR(2)) as Style,\n CAST (SellStartDate AS DATETIME) as SellStartDate,\n CAST (SellEndDate AS DATETIME) as SellEndDate,\n CAST (DiscontinuedDate AS DATETIME) as DiscontinuedDate,\n CAST(r.filepath(1) AS VARCHAR(4)) as Year, \n CAST(r.filepath(2) AS VARCHAR(2)) as Month\n FROM\n OPENROWSET (\n BULK 'https://stacdatasciencelabpayano.dfs.core.windows.net/raw/advw/data/product/Year=*/Month=*/*.parquet',\n FORMAT ='PARQUET'\n ) as [r];\n GO",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "datascience2023",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/02_CREATE_TABLE_EXTERNAL')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "USE datascience2023;\nGO\n\nCREATE EXTERNAL TABLE business.DimPerson\n WITH (\n     LOCATION = '/business/lakehouse/dimperson/Year=2022/Month=04/',\n     DATA_SOURCE = ExternalUPDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n )  \n AS\nWITH CustomerIDNotNull (CustomerID, PersonID, CustomerAlternativeKey)  \nAS  \n(  \n    SELECT c.CustomerID, c.PersonID, c.AccountNumber\n    FROM stagingDim.Customer c \n    WHERE c.PersonID IS NOT NULL \n) \nSELECT c.CustomerID AS CustomerKey, \nc.CustomerAlternativeKey AS CustomerAlternativeKey, \np.Title AS Title, p.FirstName AS FirstName, \np.MiddleName AS MiddleName, p.LastName AS LastName,\np.Suffix AS Suffix  \nFROM stagingDim.Person p  \nINNER JOIN CustomerIDNotNull c\nON c.PersonID = p.BusinessEntityID\nINNER JOIN stagingDim.PersonPhone ph\nON c.PersonID = ph.BusinessEntityID\nINNER JOIN stagingDim.EmailAddress em\nON c.PersonID = em.BusinessEntityID\nGO\n\nCREATE EXTERNAL TABLE business.DimProduct\n WITH (\n     LOCATION = '/business/lakehouse/dimproduct/Year=2022/Month=04/',\n     DATA_SOURCE = ExternalUPDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n )  \n AS\nSELECT p.ProductID AS ProductID, \np.Name AS ProductName, \np.ProductNumber AS ProductAlternativeKey, \np.FinishedGoodsFlag AS FinishedGoodsFlag, \np.Color AS Color,\np.SafetyStockLevel AS SafetyStockLevel,\np.ReorderPoint AS ReorderPoint,\np.StandardCost AS StandardCost,\np.ListPrice AS ListPrice,\np.Size AS Size,\np.ProductLine AS ProductLine,\np.Class AS Class,\np.Style AS Style,\np.SellStartDate AS SellStartDate,\np.SellEndDate AS SellEndDate,\np.DiscontinuedDate AS DiscontinuedDate,\npc.ProductCategoryName AS ProductCategoryName,\npsc.Name AS ProductSubCategoryName\nFROM stagingDim.Product p  \nINNER JOIN stagingDim.ProductSubcategory psc\nON p.ProductSubCategoryID = psc.ProductSubCategoryID\nINNER JOIN stagingDim.ProductCategory pc\nON pc.ProductCategoryID = psc.ProductCategoryID\nGO\n\nCREATE EXTERNAL TABLE business.FactInternetSales\nWITH (\n     LOCATION = '/business/lakehouse/factinternetsales/Year=2022/Month=04/',\n     DATA_SOURCE = ExternalUPDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n)  \nAS\nSELECT\nsod.ProductID AS ProductKey,\nConvert(CHAR(8),soh.OrderDate,112) AS OrderDateKey,\nConvert(CHAR(8),soh.DueDate,112) AS DueDateKey,\nsoh.CustomerID AS CustomerKey,\nsoh.SalesOrderNumber,\nsod.SpecialOfferID AS SpecialOfferKey,\nSUM(sod.UnitPrice*sod.OrderQty) AS TotalCost,\nSUM(sod.OrderQty) AS TotalOrderQuantity,\nSUM(sod.UnitPriceDiscount) AS TotalDiscount\nFROM stagingDim.SalesOrderHeader soh \nINNER JOIN stagingDim.SalesOrderDetail sod \nON soh.SalesOrderID = sod.SalesOrderID\nGROUP BY sod.ProductID,sod.SpecialOfferID,soh.OrderDate,soh.DueDate,CustomerID,soh.SalesOrderNumber\nGO\n\n--Transacional con particion\nCREATE EXTERNAL TABLE business.DimDate(\n    DateKey INT,\n    FullDateAlternateKey DATE\n) WITH (\n    LOCATION = '/business/lakehouse/dimdate/DimDate.csv',\n    DATA_SOURCE = ExternalUPDataSource,\n    FILE_FORMAT = UPCSVWithHEADERFORMAT\n);\nGO\n\n--Crear tabla a partir del archivo parquet\nCREATE EXTERNAL TABLE business.Badges(\n    Id INT,\n    Name VARCHAR,\n    UserId INT\n) WITH (\n    LOCATION = '/business/aggregate/*',\n    DATA_SOURCE = UPExternalDataSource,\n    FILE_FORMAT = UPParquetFileFormat\n);\nGO\n\nSELECT * FROM business.Badges\n--Genera error porque se definieron mal los campos.\n\nDROP EXTERNAL TABLE business.Badges\n\nSELECT TOP (10) *\nFrom OPENROWSET (BULK '/business/aggregate/*.parquet',\nDATA_SOURCE= 'UPExternalDataSource',\nFORMAT ='PARQUET')  AS [file]\nGO;\n\n--creando la tabla correctamente con los tipos de datos\nCREATE EXTERNAL TABLE business.Badges01(\n    Id BIGINT,\n    Name nvarchar(150),\n    UserId INT\n) WITH (\n    LOCATION = '/business/aggregate/*',\n    DATA_SOURCE = UPExternalDataSource,\n    FILE_FORMAT = UPParquetFileFormat\n);\nGO\n\nSELECT * FROM business.Badges01\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "datascience2023",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		}
+	]
+}

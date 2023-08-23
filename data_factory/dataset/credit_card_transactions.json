@@ -1,0 +1,97 @@
+{
+	"name": "credit_card_transactions",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSLinkedService_cc",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string",
+				"defaultValue": "User0_credit_card_transactions"
+			}
+		},
+		"folder": {
+			"name": "01_creditcard"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().filename,'.csv')",
+					"type": "Expression"
+				},
+				"folderPath": "data/creditcard",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "User",
+				"type": "String"
+			},
+			{
+				"name": "Card",
+				"type": "String"
+			},
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Month",
+				"type": "String"
+			},
+			{
+				"name": "Day",
+				"type": "String"
+			},
+			{
+				"name": "Time",
+				"type": "String"
+			},
+			{
+				"name": "Amount",
+				"type": "String"
+			},
+			{
+				"name": "Use Chip",
+				"type": "String"
+			},
+			{
+				"name": "Merchant Name",
+				"type": "String"
+			},
+			{
+				"name": "Merchant City",
+				"type": "String"
+			},
+			{
+				"name": "Merchant State",
+				"type": "String"
+			},
+			{
+				"name": "Zip",
+				"type": "String"
+			},
+			{
+				"name": "MCC",
+				"type": "String"
+			},
+			{
+				"name": "Errors?",
+				"type": "String"
+			},
+			{
+				"name": "Is Fraud?",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"name": "h_credit_card_transactions",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSLinkedService_cc",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "01_creditcard"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().filename,'.json')",
+					"type": "Expression"
+				},
+				"folderPath": "data/creditcard",
+				"fileSystem": "master"
+			}
+		},
+		"schema": {}
+	}
+}

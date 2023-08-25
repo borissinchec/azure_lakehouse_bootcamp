@@ -13,7 +13,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "lista_archivo_creditcards",
-					"value": "[\"User0_credit_card_transactions\",\n\"sd254_cards\",\n\"sd254_users\"]"
+					"value": "[\"User0_credit_card_transactions\", \n\"sd254_cards\", \n\"sd254_users\"]"
 				}
 			},
 			{

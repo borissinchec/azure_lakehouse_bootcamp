@@ -1,0 +1,45 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"folder": {
+			"name": "02_creditcards"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_adls_json_sink",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          User as string,",
+				"          Card as string,",
+				"          Year as string,",
+				"          Month as string,",
+				"          Day as string,",
+				"          Time as string,",
+				"          Amount as string,",
+				"          {Use Chip} as string,",
+				"          {Merchant Name} as string,",
+				"          {Merchant City} as string,",
+				"          {Merchant State} as string,",
+				"          Zip as string,",
+				"          MCC as string,",
+				"          {Errors?} as string,",
+				"          {Is Fraud?} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> source1"
+			]
+		}
+	}
+}

@@ -115,10 +115,14 @@
 		],
 		"variables": {
 			"lista_archivos": {
-				"type": "Array",
-				"defaultValue": [
-					"holamundo"
-				]
+				"type": "String"
+			},
+			"filename1": {
+				"type": "String",
+				"defaultValue": "User0_credit_card_transactions"
+			},
+			"lista_archivo_creditcards": {
+				"type": "String"
 			}
 		},
 		"folder": {

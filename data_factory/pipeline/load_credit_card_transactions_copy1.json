@@ -1,5 +1,5 @@
 {
-	"name": "load_credit_card_transactions",
+	"name": "load_credit_card_transactions_copy1",
 	"properties": {
 		"activities": [
 			{
@@ -27,32 +27,37 @@
 						}
 					},
 					"sink": {
-						"type": "JsonSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "JsonWriteSettings"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "ds_adls_csv_origen",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "credit_card_transactions-ibm_v2"
+							"filename": "User0_credit_card_transactions"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_json_sink",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "h_transactions"
-						}
+						"referenceName": "ds_adls_parquet_sink",
+						"type": "DatasetReference"
 					}
 				]
 			},

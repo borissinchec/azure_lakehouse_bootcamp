@@ -27,23 +27,15 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "JsonSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "JsonWriteSettings"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
@@ -56,7 +48,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_parquet_sink",
+						"referenceName": "ds_adls_json_sink",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "h_transactions"
@@ -96,23 +88,15 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "JsonSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "JsonWriteSettings"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
@@ -125,7 +109,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_parquet_sink",
+						"referenceName": "ds_adls_json_sink",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "m_cards"
@@ -165,23 +149,15 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "JsonSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "JsonWriteSettings"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
@@ -194,7 +170,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_parquet_sink",
+						"referenceName": "ds_adls_json_sink",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "m_users"

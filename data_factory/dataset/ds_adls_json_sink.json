@@ -1,0 +1,80 @@
+{
+	"name": "ds_adls_json_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSLinkedService_cc",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "01_creditcard"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().filename,'.json') ",
+					"type": "Expression"
+				},
+				"folderPath": "data/creditcard",
+				"fileSystem": "master"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"User": {
+					"type": "string"
+				},
+				"Card": {
+					"type": "string"
+				},
+				"Year": {
+					"type": "string"
+				},
+				"Month": {
+					"type": "string"
+				},
+				"Day": {
+					"type": "string"
+				},
+				"Time": {
+					"type": "string"
+				},
+				"Amount": {
+					"type": "string"
+				},
+				"Use Chip": {
+					"type": "string"
+				},
+				"Merchant Name": {
+					"type": "string"
+				},
+				"Merchant City": {
+					"type": "string"
+				},
+				"Merchant State": {
+					"type": "string"
+				},
+				"Zip": {
+					"type": "string"
+				},
+				"MCC": {
+					"type": "string"
+				},
+				"Errors?": {
+					"type": "null"
+				},
+				"Is Fraud?": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

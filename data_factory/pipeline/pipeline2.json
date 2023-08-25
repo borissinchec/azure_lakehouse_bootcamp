@@ -115,7 +115,10 @@
 		],
 		"variables": {
 			"lista_archivos": {
-				"type": "String"
+				"type": "Array",
+				"defaultValue": [
+					"holamundo"
+				]
 			},
 			"filename1": {
 				"type": "String",

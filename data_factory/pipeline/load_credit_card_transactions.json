@@ -13,7 +13,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "lista_archivo_creditcards",
-					"value": "['User0_credit_card_transactions','sd254_cards']"
+					"value": "[\"User0_credit_card_transactions\",\"sd254_cards\"]"
 				}
 			},
 			{
@@ -108,10 +108,6 @@
 			}
 		],
 		"variables": {
-			"filename1": {
-				"type": "String",
-				"defaultValue": "User0_credit_card_transactions"
-			},
 			"lista_archivos": {
 				"type": "String"
 			},

@@ -1,0 +1,31 @@
+{
+	"name": "ds_adls_json_cp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "adls_ls_cp",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "02_creditportfolio"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().filename,'.json')",
+					"type": "Expression"
+				},
+				"folderPath": "creditportfolio",
+				"fileSystem": "business"
+			}
+		},
+		"schema": {}
+	}
+}

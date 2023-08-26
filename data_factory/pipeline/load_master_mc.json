@@ -147,102 +147,6 @@
 									"type": "String",
 									"physicalType": "UTF8"
 								}
-							},
-							{
-								"source": {
-									"name": "CTD_MORA_30",
-									"type": "Int64",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CTD_MORA_30",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "CTD_MORA_60",
-									"type": "Int64",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CTD_MORA_60",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "CTD_MORA_90",
-									"type": "Int64",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CTD_MORA_90",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "CTD_MORA_120",
-									"type": "Int64",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CTD_MORA_120",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "MTO_MORA_30",
-									"type": "Double",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "MTO_MORA_30",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "MTO_MORA_60",
-									"type": "Double",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "MTO_MORA_60",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "MTO_MORA_90",
-									"type": "Double",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "MTO_MORA_90",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "MTO_MORA_120",
-									"type": "Double",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "MTO_MORA_120",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
 							}
 						],
 						"typeConversion": true,
@@ -289,6 +193,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"variableName": "file1",
 					"value": "archive2"

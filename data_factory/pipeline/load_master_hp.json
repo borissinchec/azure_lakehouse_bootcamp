@@ -49,6 +49,7 @@
 						}
 					},
 					"enableStaging": false,
+					"dataIntegrationUnits": 4,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
@@ -289,6 +290,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"variableName": "file1",
 					"value": "archive1"

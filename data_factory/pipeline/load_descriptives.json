@@ -27,15 +27,23 @@
 						}
 					},
 					"sink": {
-						"type": "JsonSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "JsonWriteSettings"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -48,10 +56,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_json_cp",
+						"referenceName": "ds_adls_parquet_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatedad"
+							"filename": "me_descatedad",
+							"foldername": "me_descatedad"
 						}
 					}
 				]
@@ -88,15 +97,23 @@
 						}
 					},
 					"sink": {
-						"type": "JsonSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "JsonWriteSettings"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -109,10 +126,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_json_cp",
+						"referenceName": "ds_adls_parquet_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatgen"
+							"filename": "me_descatgen",
+							"foldername": "me_descatgen"
 						}
 					}
 				]
@@ -149,15 +167,23 @@
 						}
 					},
 					"sink": {
-						"type": "JsonSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "JsonWriteSettings"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -170,10 +196,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_json_cp",
+						"referenceName": "ds_adls_parquet_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatdep"
+							"filename": "me_descatdep",
+							"foldername": "me_descatdep"
 						}
 					}
 				]

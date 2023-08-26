@@ -1,5 +1,5 @@
 {
-	"name": "load_master",
+	"name": "load_business",
 	"properties": {
 		"activities": [
 			{
@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_master_mc",
+						"referenceName": "load_business_mc",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -29,7 +29,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_master_hp",
+						"referenceName": "load_business_hp",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true

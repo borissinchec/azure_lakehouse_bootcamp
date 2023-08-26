@@ -26,10 +26,10 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@concat('data/creditportfolio/',dataset().foldername)",
+					"value": "@concat('creditportfolio/',dataset().foldername)",
 					"type": "Expression"
 				},
-				"fileSystem": "master"
+				"fileSystem": "business"
 			},
 			"compressionCodec": "snappy"
 		},

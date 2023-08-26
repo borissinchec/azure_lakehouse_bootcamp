@@ -1,5 +1,5 @@
 {
-	"name": "pipeline4",
+	"name": "load_master",
 	"properties": {
 		"activities": [
 			{

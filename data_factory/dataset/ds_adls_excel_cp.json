@@ -1,0 +1,33 @@
+{
+	"name": "ds_adls_excel_cp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "adls_ls_cp",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "02_creditportfolio"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Hoja1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().filename,'.xlsx')",
+					"type": "Expression"
+				},
+				"folderPath": "data/creditporfolio",
+				"fileSystem": "raw"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}

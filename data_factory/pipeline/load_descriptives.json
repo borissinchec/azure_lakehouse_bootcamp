@@ -16,25 +16,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false,
@@ -49,7 +44,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_adls_csv_cp",
+						"referenceName": "ds_adls_excel_cp",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "m_descatedad"
@@ -58,10 +53,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_csv_cp_sink",
+						"referenceName": "ds_adls_parquet_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatedad"
+							"filename": "me_descatedad",
+							"foldername": "me_descatedad"
 						}
 					}
 				]
@@ -98,14 +94,12 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false,
@@ -129,10 +123,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_csv_cp_sink",
+						"referenceName": "ds_adls_parquet_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatgen"
+							"filename": "me_descatgen",
+							"foldername": "me_descatgen"
 						}
 					}
 				]
@@ -169,14 +164,12 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false,
@@ -200,10 +193,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_csv_cp_sink",
+						"referenceName": "ds_adls_parquet_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatdep"
+							"filename": "me_descatdep",
+							"foldername": "me_descatdep"
 						}
 					}
 				]

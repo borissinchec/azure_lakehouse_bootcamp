@@ -27,12 +27,14 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -56,11 +58,10 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_parquet_cp",
+						"referenceName": "ds_adls_csv_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatedad",
-							"foldername": "me_descatedad"
+							"filename": "me_descatedad"
 						}
 					}
 				]
@@ -97,12 +98,14 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -126,11 +129,10 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_parquet_cp",
+						"referenceName": "ds_adls_csv_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatgen",
-							"foldername": "me_descatgen"
+							"filename": "me_descatgen"
 						}
 					}
 				]
@@ -167,12 +169,14 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -196,11 +200,10 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_parquet_cp",
+						"referenceName": "ds_adls_csv_cp",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "me_descatdep",
-							"foldername": "me_descatdep"
+							"filename": "me_descatdep"
 						}
 					}
 				]

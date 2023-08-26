@@ -58,7 +58,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_csv_cp",
+						"referenceName": "ds_adls_csv_cp_sink",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "me_descatedad"
@@ -129,7 +129,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_csv_cp",
+						"referenceName": "ds_adls_csv_cp_sink",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "me_descatgen"
@@ -200,7 +200,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_csv_cp",
+						"referenceName": "ds_adls_csv_cp_sink",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "me_descatdep"

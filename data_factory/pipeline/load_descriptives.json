@@ -83,14 +83,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -114,7 +111,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_adls_csv_cp",
+						"referenceName": "ds_adls_excel_cp",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "m_descatgen"
@@ -153,14 +150,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -184,7 +178,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_adls_csv_cp",
+						"referenceName": "ds_adls_excel_cp",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "m_descatdep"

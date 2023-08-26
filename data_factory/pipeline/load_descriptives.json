@@ -237,7 +237,7 @@
 							{
 								"source": {
 									"name": "N_LATITUD",
-									"type": "String",
+									"type": "Double",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -249,7 +249,7 @@
 							{
 								"source": {
 									"name": "N_LONGITUD",
-									"type": "String",
+									"type": "Double",
 									"physicalType": "String"
 								},
 								"sink": {

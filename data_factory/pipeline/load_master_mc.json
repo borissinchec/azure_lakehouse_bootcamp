@@ -1,5 +1,5 @@
 {
-	"name": "load_master_hp",
+	"name": "load_master_mc",
 	"properties": {
 		"activities": [
 			{
@@ -291,7 +291,7 @@
 				},
 				"typeProperties": {
 					"variableName": "file1",
-					"value": "archive1"
+					"value": "archive2"
 				}
 			},
 			{
@@ -305,7 +305,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "folder1",
-					"value": "hm_portafolio"
+					"value": "mm_cosechas"
 				}
 			}
 		],

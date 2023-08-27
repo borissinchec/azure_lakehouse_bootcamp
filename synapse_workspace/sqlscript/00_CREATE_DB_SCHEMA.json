@@ -1,11 +1,11 @@
 {
-	"name": "00_CREATE_TABLE_SCHEMA_CP",
+	"name": "00_CREATE_DB_SCHEMA",
 	"properties": {
 		"folder": {
 			"name": "02_trabajo_final"
 		},
 		"content": {
-			"query": "CREATE DATABASE finalwork;\nGO\n\nUSE finalwork;\nGO\n\nCREATE SCHEMA master AUTHORIZATION dbo;\nGO\nCREATE SCHEMA business AUTHORIZATION dbo;\nGO\n\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'p39345ghJ@KL95909234nl0zBe'\nGO\n\nCREATE DATABASE SCOPED CREDENTIAL UPUserIdentity WITH IDENTITY = 'SHARED ACCESS SIGNATURE',\nSECRET = '?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2023-09-09T09:48:21Z&st=2023-08-26T01:48:21Z&spr=https&sig=EtMh00EaMrCdd%2FUV64PoX3PL0Oqnl%2FuYKKvEXYEd0uQ%3D'\nGO\n\nUSE finalwork;\nGO\n\nCREATE EXTERNAL DATA SOURCE UPExternalDataSource\nWITH (\n    LOCATION = 'https://dlsupdsbcscdev7rw.dfs.core.windows.net/',\n    CREDENTIAL = UPUserIdentity\n);\nGO\n\nCREATE EXTERNAL FILE FORMAT UPParquetFileFormat \nWITH (\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n);\nGO\n\nCREATE EXTERNAL FILE FORMAT UPCSVFileFormat\nWITH (\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS (\n        PARSER_VERSION='2.0',\n        FIELD_TERMINATOR = ',',\n        STRING_DELIMITER = '\"',\n        FIRST_ROW = 2)\n)",
+			"query": "CREATE DATABASE finalwork;\nGO\n\nUSE finalwork;\nGO\n\nCREATE SCHEMA business AUTHORIZATION dbo;\nGO\n\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'p39345ghJ@KL95909234nl0zBe'\nGO\n\nCREATE DATABASE SCOPED CREDENTIAL UPUserIdentity WITH IDENTITY = 'SHARED ACCESS SIGNATURE',\nSECRET = '?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2023-09-09T09:48:21Z&st=2023-08-26T01:48:21Z&spr=https&sig=EtMh00EaMrCdd%2FUV64PoX3PL0Oqnl%2FuYKKvEXYEd0uQ%3D'\nGO\n\nUSE finalwork;\nGO\n\nCREATE EXTERNAL DATA SOURCE UPExternalDataSource\nWITH (\n    LOCATION = 'https://dlsupdsbcscdev7rw.dfs.core.windows.net/',\n    CREDENTIAL = UPUserIdentity\n);\nGO\n\nCREATE EXTERNAL FILE FORMAT UPParquetFileFormat \nWITH (\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n);\nGO\n\nCREATE EXTERNAL FILE FORMAT UPCSVFileFormat\nWITH (\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS (\n        PARSER_VERSION='2.0',\n        FIELD_TERMINATOR = ',',\n        STRING_DELIMITER = '\"',\n        FIRST_ROW = 2)\n);\nGO\n\n--El formato Json no es soportado\n--CREATE EXTERNAL FILE FORMAT UPJSONFileFormat\n--WITH (\n--    FORMAT_TYPE = JSON, \n--    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n--    );\n--GO",
 			"metadata": {
 				"language": "sql"
 			},

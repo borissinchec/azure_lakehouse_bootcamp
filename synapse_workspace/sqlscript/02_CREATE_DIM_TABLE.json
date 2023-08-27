@@ -1,0 +1,20 @@
+{
+	"name": "02_CREATE_DIM_TABLE",
+	"properties": {
+		"folder": {
+			"name": "02_trabajo_final"
+		},
+		"content": {
+			"query": "USE finalwork;\nGO;\n\n--DROP EXTERNAL TABLE business.dt_portafoliocredito\n \nCREATE EXTERNAL TABLE business.dt_portafoliocredito\n WITH (\n     LOCATION = '/business/creditportfolio/dt_portafoliocredito/',\n     DATA_SOURCE = UPExternalDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n )  \n AS\nSELECT\na.CODMES,\na.PRODUCTO_RBM0\tAS CAT_PRODUCTO,\na.CAT_DEPA,\nd.N_LATITUD,\nd.N_LONGITUD,\na.CAT_EDAD,\nb.DES_CAT_EDAD,\na.CAT_GEN,\nc.DES_CAT_GEN,\na.CTD_OPE,\na.SUM_MTOCPL,\na.SUM_MTOLIN,\na.CTD_MORA_30,\na.CTD_MORA_60,\na.CTD_MORA_90,\na.CTD_MORA_120,\na.MTO_MORA_30,\na.MTO_MORA_60,\na.MTO_MORA_90,\na.MTO_MORA_120\nFROM business.hm_portafolio a  \nLEFT JOIN business.me_descatedad b\nON a.CAT_EDAD = b.CAT_EDAD\nLEFT JOIN business.me_descatgen c\nON a.CAT_GEN = c.CAT_GEN\nLEFT JOIN business.me_descatdep d\nON a.CAT_DEPA = d.CAT_DEP\nGO\n\nselect CODMES, SUM(CTD_OPE) from business.dt_portafoliocredito where CAT_PRODUCTO IS NULL\ngroup BY CODMES\nORDER BY CODMES\n\nselect CODMES, SUM(CTD_OPE) from business.dt_portafoliocredito where CAT_DEPA IS NULL\ngroup BY CODMES\nORDER BY CODMES\n\n\nCREATE EXTERNAL TABLE business.dt_cosechascredito\n WITH (\n     LOCATION = '/business/creditportfolio/dt_cosechascredito/',\n     DATA_SOURCE = UPExternalDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n )  \n AS\nSELECT\na.CODMES,\na.PRODUCTO_RBM0\tAS CAT_PRODUCTO,\na.CAT_DEPA,\nd.N_LATITUD,\nd.N_LONGITUD,\na.CAT_EDAD,\nb.DES_CAT_EDAD,\na.CAT_GEN,\nc.DES_CAT_GEN,\na.CTD_OPE,\na.SUM_MTOCPL,\na.SUM_MTOLIN\nFROM business.mm_cosechas a  \nLEFT JOIN business.me_descatedad b\nON a.CAT_EDAD = b.CAT_EDAD\nLEFT JOIN business.me_descatgen c\nON a.CAT_GEN = c.CAT_GEN\nLEFT JOIN business.me_descatdep d\nON a.CAT_DEPA = d.CAT_DEP\nGO\n\nSELECT * FROM business.dt_cosechascredito",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "finalwork",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -51,7 +51,8 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sinkParquet"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('roundRobin', 10)) ~> sinkParquet"
 			]
 		}
 	}
